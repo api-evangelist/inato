@@ -1,0 +1,26 @@
+generated: '2026-07-19'
+method: searched
+probe: false
+source: https://support.inato.com/data-security
+url: https://support.inato.com/data-security
+certifications:
+- ISO 27001
+- HIPAA
+- GDPR
+frameworks:
+- name: HIPAA
+  detail: 'HIPAA "Preparatory to Research" (45 CFR 164.512); Business Associate Agreement (BAA) available'
+- name: ISO 27001
+  detail: Information security management
+- name: GDPR
+  detail: EU data protection compliance
+controls:
+- encryption: AES-256 for data at rest and in transit
+- de_identification: Names, dates of birth, addresses, and contact details are stripped on upload
+- pseudonymization: Records pseudonymized and stored under random identifiers in secure Google Cloud storage
+- data_hosting: Google Cloud Platform (Inato-owned projects)
+- ai_processing: Google Gemini deployed inside Inato's own Google Cloud projects
+contact: security@inato.com
+evidence:
+- source: https://support.inato.com/data-security
+  keywords: [iso 27001, hipaa, gdpr, aes-256, business associate agreement]
