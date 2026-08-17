@@ -1,0 +1,277 @@
+generated: '2026-08-17'
+method: searched
+source: https://support.inato.com/connections
+references:
+- https://support.inato.com/docs/crio-integration-reference.html
+- https://support.inato.com/docs/eclinpro-integration-reference.html
+ownership_note: >-
+  READ THIS BEFORE DERIVING ANYTHING FROM THIS FILE. Every endpoint recorded
+  here belongs to a THIRD PARTY, not to Inato. Inato publishes these two
+  integration reference pages on its own support host describing the outbound
+  calls IT MAKES to CRIO's API (api.clinicalresearch.io) and eClinPro's API
+  (eclinpro.com). Per the pipeline ownership check, a contract is judged by what
+  it says about itself: these specs name CRIO and eClinPro hosts, CRIO and
+  eClinPro auth tokens, and CRIO and eClinPro object models. They are therefore
+  NOT captured as an Inato OpenAPI, and no OpenAPI/APIReference pointer is wired
+  from them. Inato is the API CONSUMER here. This artifact exists because the
+  integration surface is real, published, dated and unusually well specified for
+  a company with no public API of its own — it is the only place Inato documents
+  machine-to-machine behaviour.
+inato_publishes_an_api: false
+role: consumer
+integration_families:
+- family: ehr-emr
+  mechanism: bulk FHIR (read-only)
+  direction: inbound (EHR -> Inato)
+  statement: >-
+    "Our integration with your EHR is established via bulk FHIR APIs that are
+    configured as read-only. This means our platform is architecturally
+    restricted from writing, modifying, or deleting any data within your EHR
+    system."
+  onboarding: >-
+    Site admin installs/authorizes the Inato app inside their own EHR using
+    Inato's published client ID, then emails prescreening@inato.com to finish
+    configuration. Access scope is reviewed and approved by the site inside
+    their EHR.
+  requires: Business Associate Agreement (BAA) signed with Inato
+- family: ctms
+  mechanism: vendor REST API (bi-directional sync)
+  direction: bi-directional (Inato <-> CTMS)
+  statement: >-
+    "Sync patients between your CTMS and Inato for seamless prescreening."
+  documented_by: the two integration reference pages listed above
+- family: bulk-upload
+  mechanism: EHI export file upload
+  direction: inbound
+  statement: >-
+    "Export your EHI data and upload it to Inato. Works with any EHR vendor."
+connectors:
+- name: Epic
+  slug: epic
+  kind: ehr
+  status: live
+  mechanism: FHIR
+  page: https://support.inato.com/connections/epic
+  onboarding: >-
+    Site downloads the Inato app from Epic's Vendor Services / fhir.epic.com
+    Downloads page using Inato's published Epic client ID
+    3b286b89-20e0-483a-94ab-8d2c0da77038, then emails prescreening@inato.com.
+- name: Athena
+  slug: athena
+  kind: ehr
+  status: live
+  mechanism: certified third-party API
+  page: https://support.inato.com/connections/athena
+  onboarding: >-
+    Enabled by the practice from athenahealth's "Manage Certified API Access"
+    admin page. Site steps also published as a PDF
+    (/docs/Athena_Integration_Site_Steps.pdf).
+- name: ModMed
+  slug: modmed
+  kind: ehr
+  status: live
+  mechanism: FHIR
+  page: https://support.inato.com/connections/modmed
+  onboarding: >-
+    A practice admin adds Inato's ModMed FHIR client ID (published verbatim on
+    the connector page; value not mirrored here) in ModMed settings. Steps PDF
+    at /docs/ModMed_Integration_Steps.pdf.
+- name: eClinicalWorks
+  slug: eclinicalworks
+  kind: ehr
+  status: live
+  mechanism: app authorization + patient groups
+  page: https://support.inato.com/connections/eclinicalworks
+  onboarding: >-
+    Three-step flow: site authorizes the integration, Inato confirms activation,
+    site activates the app and defines/enables the patient group exposed to
+    Inato. Steps PDF at /docs/eCW_Integration_Site_Steps.pdf.
+- name: Practice Fusion
+  slug: practice-fusion
+  kind: ehr
+  status: live
+  mechanism: FHIR
+  page: https://support.inato.com/connections/practice-fusion
+  onboarding: >-
+    Site must first subscribe to Practice Fusion FHIR APIs, then authorize the
+    Inato app from the Practice Fusion App Marketplace and create a patient
+    group for export. Steps PDF at
+    /docs/Practice_Fusion_Integration_Instructions.pdf.
+- name: AdvancedMD
+  slug: advancedmd
+  kind: ehr
+  status: live
+  mechanism: credentialed session (login name, password, Office Key)
+  page: https://support.inato.com/connections/advancedmd
+  security_note: >-
+    This is the weakest connector security posture Inato publishes — the site
+    shares its AdvancedMD login name, password and Office Key with Inato.
+    Inato's own guidance recommends creating a dedicated AdvancedMD account for
+    Inato rather than sharing a human user's credentials.
+- name: Office Ally
+  slug: office-ally
+  kind: ehr
+  status: live
+  mechanism: not stated on the connector page
+  page: https://support.inato.com/connections/office-ally
+- name: NextGen Enterprise
+  slug: nextgen
+  kind: ehr
+  status: live
+  mechanism: not stated on the connector page
+  page: https://support.inato.com/connections/nextgen
+- name: CRIO
+  slug: crio
+  kind: ctms
+  status: live
+  mechanism: REST API (two-way sync) + BigQuery access
+  page: https://support.inato.com/connections/crio
+  reference: https://support.inato.com/docs/crio-integration-reference.html
+  onboarding: >-
+    Almost all setup happens in the Inato listing inside CRIO's Partner
+    Directory: enable BigQuery access, open the CRIO API Widget, submit the API
+    request. Status semantics are inverted in CRIO's UI — "Disable API" means
+    the integration is ACTIVE, "Enable API" means it is INACTIVE.
+- name: eClinPro
+  slug: eclinpro
+  kind: ctms
+  status: live
+  mechanism: REST API
+  page: https://support.inato.com/connections/eclinpro
+  reference: https://support.inato.com/docs/eclinpro-integration-reference.html
+- name: DrChrono
+  slug: drchrono
+  kind: ehr
+  status: coming-soon
+- name: Advarra Clinical Conductor
+  slug: advarra-clinical-conductor
+  kind: ctms
+  status: coming-soon
+- name: RealTime
+  slug: realtime
+  kind: ctms
+  status: coming-soon
+downstream_contracts:
+- vendor: CRIO
+  owner: Clinical Research IO (clinicalresearch.io)
+  reference: https://support.inato.com/docs/crio-integration-reference.html
+  base_urls:
+    production: https://api.clinicalresearch.io
+    sandbox: https://app.sandbox-integration-useast1.sb.clinicalresearch.io
+  auth: 'Authorization: Bearer <CRIO access token>, per Inato site'
+  tenancy: 'every call carries ?client_id={CLIENT_ID}, issued by CRIO'
+  operations:
+  - name: Upsert patient
+    method: POST
+    path: /api/v1/patient?client_id={clientId}
+    when: >-
+      On "Link to CTMS" from an Inato eligibility report, and on every
+      subsequent assessment status change.
+  - name: Send pre-screening results
+    method: POST
+    path: /api/v1/patient/interaction?client_id={clientId}
+    when: One call per assessment, immediately after the upsert returns patientId.
+  - name: Get patient by site
+    method: GET
+    path: /api/v1/patient/{patientId}/site/{siteId}?client_id={clientId}
+    when: Background sync of CRIO subject status back into the Inato eligibility report.
+  - name: Get studies for site
+    method: GET
+    path: /api/v1/site/{siteId}?client_id={clientId}
+    when: When the Inato trial-to-CRIO-study mapping modal is opened.
+  - name: Get sites for client
+    method: GET
+    path: /api/v1/sites?client_id={clientId}
+    when: Once per site, while Inato configures the integration.
+  status_mapping:
+    direction: Inato assessment status -> CRIO subjectStatus / recruitmentStatus
+    map:
+      toReview: PREQUALIFIED / PROSPECT
+      toScreen: PREQUALIFIED / CONTACTING
+      preScreenFailed: NOT_ELIGIBLE / INELIGIBLE
+      notInterested: NOT_INTERESTED / NOT_INTERESTED
+      screenFailed: SCREEN_FAIL / SCREEN_FAIL
+      enrolled: ENROLLED / SUCCESS
+      irrelevant match: NOT_ELIGIBLE / INELIGIBLE
+    reverse: >-
+      A CRIO -> Inato reverse mapping exists and is described as "used by the
+      inbound webhook flow" and "intentionally lossier" (CRIO COMPLETED maps
+      back to Inato enrolled). The webhook receiver itself is NOT documented as
+      a public event surface, so no Webhooks pointer is wired from it.
+  data_minimization:
+  - No assessment-level structured eligibility data — only the human-readable
+    summary in actionDetails.
+  - No patient medical records.
+  - No actions outside of the patient and the studies mapped to that patient.
+- vendor: eClinPro
+  owner: eClinPro (eclinpro.com)
+  reference: https://support.inato.com/docs/eclinpro-integration-reference.html
+  base_urls:
+    production: https://eclinpro.com
+    sandbox: https://demo.eclinpro.com
+  auth: 'Authorization: <eClinPro access token>, per Inato site'
+  error_convention:
+    style: in-body success flag over HTTP 2xx
+    detail: >-
+      "eClinPro frequently returns HTTP 2xx with an in-body error of the shape
+      {\"success\": false, \"error\": \"...\"}. Inato treats any such payload as
+      a failure regardless of HTTP status. A successful response always carries
+      \"success\": true." This is the single most useful runtime-semantics fact
+      Inato publishes anywhere.
+  operations:
+  - name: Upsert patient
+    method: POST
+    path: /api/v1/patient
+    when: On "Link to CTMS", and on every assessment status change.
+  - name: Send pre-screening results
+    method: POST
+    path: /api/v1/patient/prescreening_summary
+    when: One call per assessment, after the upsert returns patientId.
+  - name: Get studies for site
+    method: GET
+    path: /api/v1/studies/{siteId}
+    when: When the trial-to-study mapping modal is opened.
+  - name: Get sites
+    method: GET
+    path: /api/v1/sites
+    when: Once per site, while Inato configures the integration.
+  status_mapping:
+    direction: Inato assessment status -> eClinPro subjectStatus
+    map:
+      toReview: toReview
+      toScreen: toScreen
+      preScreenFailed: preScreenFailed
+      notInterested: notInterested
+      screenFailed: screenFailed
+      enrolled: enrolled
+      irrelevant match: preScreenFailed
+  quirks:
+  - >-
+    Phone numbers are normalized to digits only with the country prefix REMOVED
+    for eClinPro (+1 (415) 555-6666 -> 4155556666) because eClinPro's
+    deduplication strips country codes. CRIO takes the same number with the
+    prefix INCLUDED (14155556666). The same logical field is serialized two
+    different ways for two different downstreams.
+  - >-
+    eClinPro deduplication precedence: email + cellPhone if email present, else
+    birthDate + cellPhone if birthDate present, else cellPhone alone.
+  - >-
+    Assessments whose Inato trial is not mapped to a downstream study are
+    SILENTLY DROPPED — no error is surfaced.
+  data_minimization:
+  - No assessment-level structured eligibility data — only the human-readable
+    summary in details.
+  - No patient medical records.
+  - No actions outside of the patient and the studies mapped to that patient.
+supported_ehr_vendor_list:
+  count: 90
+  note: >-
+    The bulk-upload path publishes a list of ~90 EHR vendors whose EHI exports
+    Inato can ingest (1upHealth, Cerner Millennium, MEDITECH, Veradigm, Tebra,
+    Canvas Medical, Health Samurai and others). This is an ingest compatibility
+    list, not an integration catalog — only the connectors above are live
+    API/FHIR integrations.
+contacts:
+  integrations: prescreening@inato.com
+  marketplace: contact-marketplace@inato.com
+  security: security@inato.com

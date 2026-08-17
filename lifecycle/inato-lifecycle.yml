@@ -1,0 +1,101 @@
+generated: '2026-08-17'
+method: searched
+source: >-
+  live probes 2026-08-17 of status.inato.com, inato.statuspage.io,
+  inato.instatus.com, www.inato.com/status, www.inato.com/changelog,
+  www.inato.com/roadmap, www.inato.com/sitemap.xml and the
+  support.inato.com client-side route table
+note: >-
+  RECORDED ABSENCE across every lifecycle surface. No StatusPage, Deprecation,
+  ChangeLog or RoadMap pointer is wired in apis.yml because none of those
+  documents exists. Inato has no API to version, so the versioning and
+  deprecation gaps are a consequence of that rather than independent failures —
+  but the missing STATUS PAGE is a real gap in its own right: sites and sponsors
+  running enrollment against the marketplace and against live EHR/CTMS syncs have
+  no public way to distinguish an Inato outage from their own EHR's.
+versioning:
+  scheme: none
+  policy_url: null
+  detail: >-
+    No API, therefore no API versioning policy. The downstream vendor APIs Inato
+    calls are both v1-pathed (CRIO /api/v1/..., eClinPro /api/v1/...) but those
+    are the vendors' versions, not Inato's.
+deprecation:
+  policy: null
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  deprecated_operations: []
+status_page:
+  present: false
+  url: null
+  probes:
+  - url: https://status.inato.com
+    status: 0
+    detail: does not resolve (no DNS record)
+  - url: https://inato.statuspage.io
+    status: 200
+    detail: >-
+      SOFT MISS — redirects to atlassian.com/software/statuspage, the vendor's
+      own marketing page. Not an Inato status page.
+  - url: https://inato.instatus.com
+    status: 200
+    detail: SOFT MISS — redirects to instatus.com, the vendor marketing page.
+  - url: https://www.inato.com/status
+    status: 404
+  - url: https://support.inato.com/status
+    status: 200
+    detail: >-
+      SOFT 404 — support.inato.com is a client-rendered SPA whose bundled route
+      table contains only /, /connections, /connections/:slug, /data-security,
+      /faq, /tutorials and /tutorials/:slug. Every other path returns HTTP 200
+      with the same shell.
+change_log:
+  present: false
+  url: null
+  probes:
+  - url: https://www.inato.com/changelog
+    status: 404
+  - url: https://support.inato.com/changelog
+    status: 200
+    detail: SOFT 404 — SPA shell, not a route.
+  detail: >-
+    Product news is published as blog posts on https://www.inato.com/blogs and
+    https://blog.inato.com/blog/all — dated, but narrative announcements
+    (partnership and integration launches), not a change log a consumer can
+    diff. The nearest thing to release notes are the integration launch posts,
+    e.g. "Inato Integrates With eClinPro" (2026-04-15).
+roadmap:
+  present: false
+  url: null
+  probes:
+  - url: https://www.inato.com/roadmap
+    status: 404
+sla:
+  published: false
+  url: null
+  detail: >-
+    No SLA, uptime commitment or support-response target found on
+    inato.com, support.inato.com or in the terms and conditions surface.
+support:
+  channels:
+  - kind: help-center
+    url: https://support.inato.com/
+  - kind: email
+    value: prescreening@inato.com
+    scope: EHR/CTMS integrations and pre-screening
+  - kind: email
+    value: contact-marketplace@inato.com
+    scope: marketplace applications and quality flags
+  - kind: email
+    value: security@inato.com
+    scope: security and compliance documentation
+  - kind: named-contact
+    value: customer success manager
+    scope: named CSM referenced in the connector activation flows
+provider_action: >-
+  A public status page is the highest-value operational artifact Inato is
+  missing. It is a hosted-vendor purchase, not an engineering project, and it
+  covers a surface (marketplace + live EHR sync) where sites currently have to
+  email a CSM to find out whether the platform is down.

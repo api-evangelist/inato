@@ -9,8 +9,13 @@ description: >-
   optimization, giving the 95% of community-based research sites that
   historically run few trials a way to participate. The marketplace spans 6,000+
   research sites across 50+ countries and is used by leading pharma sponsors.
-  Inato is not a public API provider — it is a SaaS platform surfaced in the API
-  Evangelist network as a company profile via the obvious-ventures portfolio.
+  Inato publishes no API of its own — no OpenAPI, SDK, MCP server or developer
+  portal — but it is a substantial API CONSUMER: it ingests patient records from
+  site EHRs over read-only bulk FHIR (Epic, Athena, ModMed, eClinicalWorks,
+  Practice Fusion, AdvancedMD, Office Ally, NextGen) and syncs subject status
+  bi-directionally with site CTMS platforms (CRIO, eClinPro), documenting those
+  outbound calls endpoint by endpoint on its own support host. Surfaced in the
+  API Evangelist network as a company profile via the obvious-ventures portfolio.
 url: https://raw.githubusercontent.com/api-evangelist/inato/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -19,20 +24,28 @@ x-backed-by:
 x-tier: stub
 x-tier-reason: portfolio-lead
 accessModel:
-  pricing: unknown
-  onboarding: unknown
+  pricing: contact-sales
+  onboarding: sales
   trial: false
   try_now: false
   public: false
-  label: Unknown
-  confidence: low
-  source: []
-  generated: '2026-07-22'
-  method: derived
+  label: Contact Sales
+  confidence: medium
+  source:
+  - https://www.inato.com/for-sites
+  - https://www.inato.com/contact-us
+  - plans/inato-plans-pricing.yml
+  generated: '2026-08-17'
+  method: searched
+  note: >-
+    /pricing returns 404 and does not appear in the sitemap; every commercial
+    path is "Get in touch", "Request a demo" or "Sign up now". A 2024 Inato blog
+    post states the marketplace is free for sites and that revenue comes from
+    sponsors — see plans/inato-plans-pricing.yml.
 image: https://cdn.prod.website-files.com/68c165ec9c8a75268ff69a2d/69b3a8be042ee81493120fc1_opengraph.jpg
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-19'
+modified: '2026-08-17'
 tags:
 - Company
 - Clinical Trials
@@ -51,8 +64,6 @@ maintainers:
 common:
 - type: Website
   url: https://inato.com
-- type: DeveloperPortal
-  url: https://marketplace.inato.com/login
 - type: Documentation
   url: https://support.inato.com/
 - type: Support
@@ -79,8 +90,98 @@ common:
   url: security/inato-vulnerability-disclosure.yml
 - type: DomainSecurity
   url: security/inato-domain-security.yml
+- type: About
+  url: https://www.inato.com/about-us
+- type: Careers
+  url: https://www.inato.com/careers
+- type: LinkedIn
+  url: https://www.linkedin.com/company/inato/
+- type: GitHubOrganization
+  url: https://github.com/inato
+- type: Integrations
+  url: integrations/inato-downstream-integrations.yml
+- type: Conformance
+  url: conformance/inato-conformance.yml
+- type: Packages
+  url: packages/inato-packages.yml
+- type: LLMsTxt
+  url: llms/inato-llms.txt
+- type: Plans
+  url: plans/inato-plans-pricing.yml
+- type: Lifecycle
+  url: lifecycle/inato-lifecycle.yml
+x-pointers-deliberately-omitted:
+- type: DeveloperPortal
+  reason: >-
+    REMOVED 2026-08-17. It pointed at https://marketplace.inato.com/login, which
+    is the end-user marketplace sign-in, not a developer portal. Inato publishes
+    no developer portal; api./developer./docs.inato.com do not resolve.
+- type: WellKnown
+  reason: >-
+    Every /.well-known/ path returns 404 on every Inato host — see
+    well-known/inato-well-known.yml. The pointer would assert a served surface.
+- type: SecurityTxt
+  reason: /.well-known/security.txt is 404 on inato.com and www.inato.com.
+- type: MCPServer
+  reason: >-
+    No MCP server exists, hosted or stdio, and there is no OpenAPI from which to
+    derive a candidate tool list — see mcp/inato-mcp.yml (deployment mode none).
+- type: AgentCard
+  reason: >-
+    /.well-known/agent-card.json and /.well-known/agent.json both 404 on every
+    host. Per pipeline rule an agent card is never authored on a provider's
+    behalf, so no a2a/ artifact was written at all.
+- type: SDKs
+  reason: >-
+    The seven first-party npm packages in packages/inato-packages.yml are
+    general-purpose TypeScript libraries, not client SDKs — there is no API for
+    an SDK to wrap. sdk_count must not be credited.
+- type: RateLimits
+  reason: >-
+    No API exists, so no rate limits can be published. A limit_count-0 artifact
+    was deliberately NOT written, because the agent-readiness rate_limit_signal
+    check awards partial credit for the mere presence of a rate_limits artifact.
+- type: StatusPage
+  reason: >-
+    No status page — status.inato.com does not resolve; inato.statuspage.io and
+    inato.instatus.com both redirect to the vendors' own marketing sites. See
+    lifecycle/inato-lifecycle.yml.
+- type: Deprecation
+  reason: No deprecation or versioning policy is published (no API to version).
+- type: ChangeLog
+  reason: >-
+    No change log or release-notes page; product news is narrative blog posts.
+    /changelog is 404 on inato.com and a soft 404 on the support SPA.
+- type: Webhooks
+  reason: >-
+    An inbound CRIO -> Inato webhook flow is mentioned once in the CRIO
+    integration reference but is not documented as a public event surface.
+- type: APIReference
+  reason: >-
+    The two integration reference pages on support.inato.com document CRIO's and
+    eClinPro's APIs, not Inato's. Recorded under Integrations instead — see the
+    ownership_note in integrations/inato-downstream-integrations.yml.
 x-enrichment:
-  date: '2026-07-19'
-  status: backfilled
+  date: '2026-08-17'
+  status: enriched
+  artifacts_added: 8
   pass: local-v1
-  note: backfilled from .gitignore signal + verified work evidence
+x-coverage:
+  state: none
+  reason: no-developer-program
+  detail: >-
+    Inato ships software only as an end-user web application at
+    marketplace.inato.com; api.inato.com, developer.inato.com and docs.inato.com
+    have no DNS record at all, and the only machine-to-machine documentation on
+    its support host describes the calls Inato makes INTO CRIO's and eClinPro's
+    APIs rather than any API of its own.
+  evidence:
+  - url: https://www.inato.com/openapi.json
+    status: 404
+  - url: https://marketplace.inato.com/api/graphql
+    status: 404
+  - url: https://inato.com/.well-known/agent-card.json
+    status: 404
+  - url: https://support.inato.com/docs/crio-integration-reference.html
+    status: 200
+  checked: '2026-08-17'

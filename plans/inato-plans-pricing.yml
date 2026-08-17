@@ -1,0 +1,47 @@
+generated: '2026-08-17'
+method: searched
+source: >-
+  https://www.inato.com/for-sites (HTTP 200),
+  https://www.inato.com/for-sponsors (HTTP 200),
+  https://www.inato.com/sitemap.xml (HTTP 200),
+  https://www.inato.com/pricing (HTTP 404)
+plan_count: 0
+plans: []
+note: >-
+  HONEST ZERO. Inato publishes no pricing page and no plan tiers. /pricing
+  returns 404 and the word does not appear in the sitemap; every commercial call
+  to action on the site is "Get in touch", "Request a demo" or "Sign up now".
+  There is no self-serve purchase path, no published rate card, and no API to
+  meter, so there is nothing structured to record. plan_count is 0 rather than
+  the file being omitted, because "we checked and they publish nothing" is a
+  different fact from "we did not check".
+commercial_model:
+  self_serve: false
+  gate: sales / demo request
+  sign_up: https://marketplace.inato.com/login
+  contact: https://www.inato.com/contact-us
+  two_sided: true
+  who_pays: sponsors
+  detail: >-
+    Inato runs a two-sided marketplace: pharmaceutical sponsors on one side,
+    community research sites on the other. Revenue comes from sponsors, not from
+    sites.
+historical_claims:
+- claim: The marketplace is free for research sites.
+  quotes:
+  - '"As a global tech-powered marketplace that operates entirely free for sites"'
+  - '"Liz emphasized that there is no catch: Inato is always free for sites."'
+  source: https://blog.inato.com/blog/disrupting-clinical-trials-with-inatos-free-marketplace-for-sites
+  published: '2024-01-25'
+  currency: unverified
+  why_not_a_plan: >-
+    Recorded as a historical claim rather than as a plan entry because it comes
+    from a January 2024 blog post, and the current for-sites page (fetched
+    2026-08-17) contains no statement about cost at all. A two-year-old blog
+    sentence is not a published price, so counting it as a tier would credit
+    Inato with commercial clarity it does not presently have on its own site.
+provider_action: >-
+  A one-page statement of the site-side "free" model and the sponsor-side
+  engagement model would close the entire commercial_clarity gap without
+  disclosing sponsor rates — the free-for-sites fact is already public, just not
+  anywhere durable.

@@ -1,0 +1,139 @@
+generated: '2026-08-17'
+method: probed
+source: live HTTPS probes, 2026-08-17
+note: >-
+  RECORDED ABSENCE. Every /.well-known/ path was probed on every Inato host and
+  every path returned a non-200 or an HTML shell. No `WellKnown` and no
+  `SecurityTxt` pointer is wired in apis.yml, because the pointer asserts the
+  provider SERVES that surface and Inato does not. inato.com returns a
+  distinctive hard 404 body ("Invalid .well-known request") for every
+  /.well-known/* path, which confirms the probe reached the origin rather than a
+  catch-all. marketplace.inato.com (Next.js) and support.inato.com (a
+  React/Vite SPA) both answer /.well-known/* with their own 404 pages.
+hosts_probed:
+- inato.com
+- www.inato.com
+- marketplace.inato.com
+- support.inato.com
+hosts_that_do_not_resolve:
+- api.inato.com
+- developer.inato.com
+- docs.inato.com
+- app.inato.com
+- dev.inato.com
+- status.inato.com
+- trust.inato.com
+- security.inato.com
+probes:
+- host: inato.com
+  path: /.well-known/security.txt
+  status: 404
+  file: null
+- host: inato.com
+  path: /.well-known/openid-configuration
+  status: 404
+  file: null
+- host: inato.com
+  path: /.well-known/oauth-authorization-server
+  status: 404
+  file: null
+- host: inato.com
+  path: /.well-known/api-catalog
+  status: 404
+  file: null
+- host: inato.com
+  path: /.well-known/ai-plugin.json
+  status: 404
+  file: null
+- host: inato.com
+  path: /.well-known/agent-card.json
+  status: 404
+  file: null
+- host: inato.com
+  path: /.well-known/agent.json
+  status: 404
+  file: null
+- host: www.inato.com
+  path: /.well-known/security.txt
+  status: 404
+  file: null
+- host: www.inato.com
+  path: /.well-known/openid-configuration
+  status: 404
+  file: null
+- host: www.inato.com
+  path: /.well-known/oauth-authorization-server
+  status: 404
+  file: null
+- host: www.inato.com
+  path: /.well-known/api-catalog
+  status: 404
+  file: null
+- host: www.inato.com
+  path: /.well-known/ai-plugin.json
+  status: 404
+  file: null
+- host: marketplace.inato.com
+  path: /.well-known/security.txt
+  status: 404
+  file: null
+- host: marketplace.inato.com
+  path: /.well-known/openid-configuration
+  status: 404
+  file: null
+- host: marketplace.inato.com
+  path: /.well-known/oauth-authorization-server
+  status: 404
+  file: null
+- host: marketplace.inato.com
+  path: /.well-known/api-catalog
+  status: 404
+  file: null
+- host: marketplace.inato.com
+  path: /.well-known/ai-plugin.json
+  status: 404
+  file: null
+- host: marketplace.inato.com
+  path: /.well-known/agent-card.json
+  status: 404
+  file: null
+- host: marketplace.inato.com
+  path: /.well-known/agent.json
+  status: 404
+  file: null
+- host: support.inato.com
+  path: /.well-known/security.txt
+  status: 404
+  file: null
+- host: support.inato.com
+  path: /.well-known/openid-configuration
+  status: 404
+  file: null
+- host: support.inato.com
+  path: /.well-known/oauth-authorization-server
+  status: 404
+  file: null
+- host: support.inato.com
+  path: /.well-known/api-catalog
+  status: 404
+  file: null
+- host: support.inato.com
+  path: /.well-known/ai-plugin.json
+  status: 404
+  file: null
+- host: support.inato.com
+  path: /.well-known/agent-card.json
+  status: 404
+  file: null
+- host: support.inato.com
+  path: /.well-known/agent.json
+  status: 404
+  file: null
+hits: 0
+documents_saved: 0
+security_txt_served: false
+provider_action: >-
+  Inato publishes a security contact (security@inato.com) and a security policy
+  page at https://support.inato.com/data-security. Serving those same two facts
+  as /.well-known/security.txt on inato.com is a one-file change and is the
+  cheapest machine-readable improvement available to them.

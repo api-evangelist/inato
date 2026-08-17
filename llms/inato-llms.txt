@@ -1,0 +1,141 @@
+# Inato
+
+> Inato is a Paris-founded (2016) clinical trials technology company operating an
+> AI-powered two-sided marketplace that connects pharmaceutical sponsors with
+> community research sites. Sponsors post trials and site needs; Inato uses AI for
+> site selection, early feasibility, patient pre-screening and enrollment
+> optimization, giving the ~95% of community-based research sites that
+> historically run few trials a route to participate. The marketplace spans
+> 6,000+ research sites across 50+ countries.
+
+> generated: 2026-08-17
+> method: generated
+> source: apis.yml + this repository's artifacts. Inato does NOT serve an
+> llms.txt of its own — https://www.inato.com/llms.txt returns 404, as do the
+> marketplace and support hosts (probed 2026-08-17). This file is API
+> Evangelist's faithful summary of what Inato publicly publishes, not a
+> provider-authored document.
+
+## What an agent needs to know first
+
+Inato publishes **no public API**. There is no OpenAPI, no Swagger, no GraphQL
+schema, no AsyncAPI, no MCP server, no A2A agent card, no SDK, no CLI, no
+sandbox and no developer portal. `api.inato.com`, `developer.inato.com`,
+`docs.inato.com` and `app.inato.com` do not resolve. Access to the platform is
+through a human web application at https://marketplace.inato.com/login, gated by
+an email sign-in. There is nothing here for an agent to call.
+
+What Inato does publish, and the reason this profile is not empty, is an
+unusually specific set of **integration reference documents describing outbound
+calls Inato makes into other vendors' APIs**, plus a substantive security and
+AI-governance disclosure. Both are summarized below.
+
+## Products
+
+- AI site selection — https://www.inato.com/ai-site-selection
+- AI patient pre-screening — https://www.inato.com/patient-pre-screening
+- Early feasibility — https://www.inato.com/early-feasibility
+- Inato + Devana — https://www.inato.com/inato-devana
+- For sponsors — https://www.inato.com/for-sponsors
+- For sites — https://www.inato.com/for-sites
+
+## Integrations (Inato as API consumer)
+
+Inato ingests patient records from site EHRs over **read-only bulk FHIR**, and
+syncs patient/subject status bi-directionally with site CTMS platforms over the
+vendors' REST APIs. A signed BAA is a prerequisite for every connector.
+
+Live connectors: Epic, Athena, ModMed, eClinicalWorks, Practice Fusion,
+AdvancedMD, Office Ally, NextGen Enterprise (EHR); CRIO, eClinPro (CTMS).
+Announced as coming soon: DrChrono, Advarra Clinical Conductor, RealTime.
+
+- Connector catalog — https://support.inato.com/connections
+- CRIO downstream integration reference — https://support.inato.com/docs/crio-integration-reference.html
+- eClinPro downstream integration reference — https://support.inato.com/docs/eclinpro-integration-reference.html
+
+Both reference pages document, endpoint by endpoint, the calls Inato makes to
+those vendors — base URLs (production and sandbox), auth style, request and
+response shapes, field notes, deduplication rules, status mappings, and an
+explicit "what we do not send" list. **Those endpoints belong to CRIO and
+eClinPro, not to Inato.** Do not treat them as an Inato API.
+
+One runtime-semantics fact worth carrying: Inato documents that eClinPro
+"frequently returns HTTP 2xx with an in-body error of the shape
+`{"success": false, "error": "…"}`" and that Inato treats any such payload as a
+failure regardless of HTTP status.
+
+## Security, compliance and AI governance
+
+- Data security page — https://support.inato.com/data-security
+- Trust center (Drata) — https://app.drata.com/trust/9cb59bcb-0c38-11ee-865f-029d78a187d9 (returns HTTP 403 to machines; Cloudflare challenge)
+- Security contact — security@inato.com
+
+Claimed: ISO 27001, HIPAA ("Preparatory to Research", 45 CFR 164.512), GDPR.
+Not claimed anywhere public: SOC 2, 21 CFR Part 11, HITRUST, PCI DSS, FedRAMP.
+
+Controls published: AES-256 at rest and in transit; identifying fields stripped
+at upload/sync before any AI processing; pseudonymization under random
+identifiers; hosting in Inato-owned Google Cloud projects; Cloud Armor;
+original files not retained in viewable form; EHR access architecturally
+read-only.
+
+AI governance published: eligibility assessment runs on Google Gemini inside
+Inato's own GCP projects; no site or patient data is used to train models and
+Google does not use it to train foundation models; patient data never reaches a
+third-party US-based LLM provider; the AI never decides eligibility — it flags
+and summarizes, and the site team makes every final call; every assessment is
+explained criterion by criterion and can be overridden; patients are assessed
+individually rather than ranked against each other.
+
+inato.com's robots.txt explicitly allows every named AI crawler (GPTBot,
+ClaudeBot, PerplexityBot, Google-Extended, Meta-ExternalAgent, CCBot) with no
+disallow rules.
+
+## Commercial
+
+No pricing page exists (https://www.inato.com/pricing returns 404). Every
+commercial path is a demo or contact request. Inato is a two-sided marketplace
+and takes its revenue from sponsors; a January 2024 Inato blog post states the
+marketplace "operates entirely free for sites", a claim not repeated on the
+current site.
+
+- Sign in / sign up — https://marketplace.inato.com/login
+- Contact — https://www.inato.com/contact-us
+- Terms — https://www.inato.com/terms-conditions
+- Privacy — https://www.inato.com/privacy-policy
+
+## Engineering and open source
+
+- GitHub organization — https://github.com/inato (verified, 24 public repos)
+
+Inato publishes seven first-party npm packages under the `@inato` and
+`@inato-form` scopes — TypeScript form libraries (`@inato-form/core`, `fields`,
+`react-hook-form`, `mantine`), Effect/fp-ts interop helpers, a secret-manager
+config provider, and OpenTelemetry instrumentation for Node.js. **None of them
+is a client SDK**, because there is no API to wrap. Three of the four source
+repositories are archived; only `@inato/custom-instrumentations-node` has a 2026
+release. The org also hosts well-regarded fp-ts and Effect training material.
+
+## Support and company
+
+- Site support — https://support.inato.com/
+- FAQ — https://support.inato.com/faq
+- Tutorials — https://support.inato.com/tutorials
+- Blog — https://www.inato.com/blogs and https://blog.inato.com/blog/all
+- News and press — https://www.inato.com/news-press
+- Case studies — https://www.inato.com/case-studies
+- About — https://www.inato.com/about-us
+- Careers — https://www.inato.com/careers
+- LinkedIn — https://www.linkedin.com/company/inato/
+
+Contacts: prescreening@inato.com (integrations and pre-screening),
+contact-marketplace@inato.com (marketplace applications),
+security@inato.com (security and compliance documentation).
+
+## Not available
+
+No status page (status.inato.com does not resolve; inato.statuspage.io and
+inato.instatus.com both redirect to the vendors' own marketing sites). No change
+log, no roadmap, no SLA, no deprecation policy, no rate-limit documentation, no
+/.well-known/ documents of any kind — every /.well-known/ path returns 404 on
+every Inato host.

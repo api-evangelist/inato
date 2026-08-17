@@ -1,0 +1,157 @@
+generated: '2026-08-17'
+method: searched
+source: >-
+  https://registry.npmjs.org/-/v1/search?text=inato — plus per-package registry
+  metadata endpoints (registry.npmjs.org/<pkg>) and the github.com/inato
+  organization repo listing (api.github.com/orgs/inato/repos)
+note: >-
+  IMPORTANT PROVENANCE NOTE — these are real, first-party, Inato-published open
+  source packages, but NONE of them is a client SDK for an Inato API. Inato
+  ships no public API (see ../apis.yml x-coverage), so there is nothing for an
+  SDK to wrap. Every package below is general-purpose engineering tooling Inato
+  open-sourced from its own product codebase: TypeScript form libraries, Effect
+  / fp-ts helpers, and an OpenTelemetry instrumentation bundle. For that reason
+  this file deliberately does NOT wire a `type: SDKs` pointer in apis.yml —
+  sdk_count would be crediting Inato with client libraries for an API it does
+  not publish. Recorded here because first-party package publishing and its
+  release dates are real, dated, provider-published evidence of engineering
+  activity.
+registries_checked:
+- registry: npm
+  endpoint: https://registry.npmjs.org
+  result: 7 first-party packages found under the @inato and @inato-form scopes
+- registry: pypi
+  endpoint: https://pypi.org/pypi/<name>/json
+  result: 'no first-party package (inato, inato-sdk, inato-api all HTTP 404)'
+- registry: rubygems
+  endpoint: https://rubygems.org/api/v1/gems/<name>.json
+  result: none found
+- registry: maven-central
+  endpoint: https://search.maven.org
+  result: none found
+- registry: nuget
+  endpoint: https://api.nuget.org
+  result: none found
+- registry: crates.io
+  endpoint: https://crates.io/api/v1/crates/<name>
+  result: none found (the unrelated `inator` crate is a third-party parsing library)
+- registry: pkg.go.dev
+  endpoint: https://proxy.golang.org
+  result: none found
+packages:
+- language: typescript
+  registry: npm
+  name: '@inato/custom-instrumentations-node'
+  url: https://www.npmjs.com/package/@inato/custom-instrumentations-node
+  install: npm install @inato/custom-instrumentations-node
+  version: 0.5.1
+  published: '2026-07-13'
+  license: ISC
+  repository: https://github.com/inato/custom-instrumentations-node
+  official: true
+  kind: library
+  api_client: false
+  description: Inato custom OpenTelemetry instrumentation for Node.js
+- language: typescript
+  registry: npm
+  name: '@inato/secret-manager-config-provider'
+  url: https://www.npmjs.com/package/@inato/secret-manager-config-provider
+  install: npm install @inato/secret-manager-config-provider
+  version: 0.3.3
+  published: '2025-11-18'
+  license: MIT
+  repository: https://github.com/inato/secret-manager-config-provider
+  official: true
+  kind: library
+  api_client: false
+  description: >-
+    Effect ConfigProvider backed by a secret manager. The source repository is
+    ARCHIVED on GitHub as of 2026-04-07 while the package remains published.
+- language: typescript
+  registry: npm
+  name: '@inato-form/core'
+  url: https://www.npmjs.com/package/@inato-form/core
+  install: npm install @inato-form/core
+  version: 0.2.0
+  published: '2025-10-15'
+  license: MIT
+  repository: https://github.com/inato/inato-form
+  official: true
+  kind: library
+  api_client: false
+  description: Core package of inato-form, Inato's TypeScript form-building library
+- language: typescript
+  registry: npm
+  name: '@inato-form/fields'
+  url: https://www.npmjs.com/package/@inato-form/fields
+  install: npm install @inato-form/fields
+  version: 0.2.0
+  published: '2025-10-15'
+  license: MIT
+  repository: https://github.com/inato/inato-form
+  official: true
+  kind: library
+  api_client: false
+  description: Field templates for inato-form
+- language: typescript
+  registry: npm
+  name: '@inato-form/react-hook-form'
+  url: https://www.npmjs.com/package/@inato-form/react-hook-form
+  install: npm install @inato-form/react-hook-form
+  version: 0.2.0
+  published: '2025-10-15'
+  license: MIT
+  repository: https://github.com/inato/inato-form
+  official: true
+  kind: library
+  api_client: false
+  description: react-hook-form binding for inato-form
+- language: typescript
+  registry: npm
+  name: '@inato-form/mantine'
+  url: https://www.npmjs.com/package/@inato-form/mantine
+  install: npm install @inato-form/mantine
+  version: 0.2.0
+  published: '2025-10-15'
+  license: MIT
+  repository: https://github.com/inato/inato-form
+  official: true
+  kind: library
+  api_client: false
+  description: Mantine field implementations for inato-form
+- language: typescript
+  registry: npm
+  name: '@inato/effect-fpts-interop'
+  url: https://www.npmjs.com/package/@inato/effect-fpts-interop
+  install: npm install @inato/effect-fpts-interop
+  version: 0.12.0
+  published: '2024-06-20'
+  license: MIT
+  repository: https://github.com/inato/effect-fpts-interop
+  official: true
+  kind: library
+  api_client: false
+  description: >-
+    Helpers to interoperate between the Effect framework and fp-ts. Source
+    repository ARCHIVED on GitHub 2025-04-04; last npm release 2024-06-20.
+currency:
+  latest_release: '2026-07-13'
+  packages_total: 7
+  api_client_packages: 0
+  archived_upstream: 3
+  note: >-
+    Three of the four source repositories behind these packages are archived on
+    GitHub (inato-form archived 2025-10-15, effect-fpts-interop 2025-04-04,
+    secret-manager-config-provider 2026-04-07). Only
+    @inato/custom-instrumentations-node has a 2026 release. Read as an
+    engineering-culture signal, not as API SDK currency — there is no API.
+github_organization:
+  url: https://github.com/inato
+  verified: true
+  public_repos: 24
+  contact: bastien@inato.com
+  note: >-
+    Verified GitHub organization (id 26204757, created 2017-03-05). The public
+    repos are open-source libraries, conference/meetup material, engineering
+    training material (fp-ts, Effect) and take-home hiring tests. There is no
+    repository containing an Inato API specification, SDK, or CLI.

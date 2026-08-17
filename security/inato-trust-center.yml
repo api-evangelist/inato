@@ -1,26 +1,96 @@
-generated: '2026-07-19'
+generated: '2026-08-17'
 method: searched
-probe: false
+probe: true
 source: https://support.inato.com/data-security
 url: https://support.inato.com/data-security
+trust_center:
+  platform: Drata
+  url: https://app.drata.com/trust/9cb59bcb-0c38-11ee-865f-029d78a187d9
+  discovered_in: >-
+    the "Contact Our Security Team" block of support.inato.com/data-security
+    (extracted from the site's client-side bundle, since the page is
+    JS-rendered)
+  readable: false
+  probe:
+    status: 403
+    detail: >-
+      Cloudflare bot challenge ("Just a moment...") on app.drata.com; the Drata
+      public API (public-api.drata.com/public/trust-center/<id>) answers 401
+      Unauthorized. The trust center is real and Inato-owned, but its contents —
+      including whatever audit reports Drata is tracking — could not be read by
+      machine on 2026-08-17. Certifications below are therefore taken from
+      Inato's own security page, not from the trust center.
 certifications:
 - ISO 27001
 - HIPAA
 - GDPR
+certifications_not_claimed:
+- SOC 2
+- 21 CFR Part 11
+- HITRUST
+- PCI DSS
+- FedRAMP
 frameworks:
 - name: HIPAA
-  detail: 'HIPAA "Preparatory to Research" (45 CFR 164.512); Business Associate Agreement (BAA) available'
+  detail: 'HIPAA "Preparatory to Research" (45 CFR 164.512); Business Associate Agreement (BAA) available and required before any EHR connector is enabled'
 - name: ISO 27001
-  detail: Information security management
+  detail: Information security management — claimed as a badge; certificate available on request, not published
 - name: GDPR
-  detail: EU data protection compliance
+  detail: >-
+    EU data protection. Inato states the processor posture explicitly: "Inato
+    processes the data on your behalf, under your instruction and
+    authorization." Regional data-residency commitments claimed for the GCP
+    environment.
 controls:
 - encryption: AES-256 for data at rest and in transit
-- de_identification: Names, dates of birth, addresses, and contact details are stripped on upload
+- de_identification: >-
+    Names, dates of birth, addresses and contact details are stripped the moment
+    a file is uploaded or synced, before any AI processing begins
 - pseudonymization: Records pseudonymized and stored under random identifiers in secure Google Cloud storage
 - data_hosting: Google Cloud Platform (Inato-owned projects)
-- ai_processing: Google Gemini deployed inside Inato's own Google Cloud projects
+- network_defense: Google Cloud Armor for DDoS and external threat defense
+- access_control: >-
+    Logical access controls designed to prevent Inato staff from viewing
+    identifiable patient data; sponsors see only aggregated, de-identified
+    pre-screening insights
+- retention: Original uploaded files are not retained in viewable form
+- integration_posture: >-
+    EHR integrations are read-only bulk FHIR — architecturally unable to write,
+    modify or delete data in the site's EHR, and the site approves the access
+    scope inside its own EHR
+ai_governance:
+- model: Google Gemini, deployed inside Inato's own Google Cloud projects
+- no_third_party_llm: Patient data is never sent to any third-party US-based LLM provider
+- no_training: >-
+    No site or patient data is used to train AI models; Google does not use it to
+    train their foundation models. Non-patient signals (user feedback on AI
+    response accuracy) may be used to tune prompts and configuration
+- human_in_the_loop: >-
+    The AI flags and summarizes; the site team reviews every patient and makes
+    every final call before anyone moves to screening
+- explainability: >-
+    Criterion-by-criterion summary of met / not met / unknown with the clinical
+    evidence relied on, which the site team can read, challenge and override
+- bias_control: Each patient is assessed against protocol criteria individually, never ranked against other patients
+- purpose_limitation: >-
+    Patient data is processed solely for the site's specific trial — not for
+    product development, AI training or research, except as agreed in writing
 contact: security@inato.com
+documentation_on_request: >-
+  Compliance documentation, security-review templates and the BAA are offered via
+  security@inato.com rather than published for download.
 evidence:
 - source: https://support.inato.com/data-security
-  keywords: [iso 27001, hipaa, gdpr, aes-256, business associate agreement]
+  keywords: [iso 27001, hipaa, gdpr, aes-256, business associate agreement, google gemini, cloud armor, de-identification]
+- source: https://app.drata.com/trust/9cb59bcb-0c38-11ee-865f-029d78a187d9
+  status: 403
+  keywords: [drata, trust center]
+weakest_link:
+  connector: AdvancedMD
+  detail: >-
+    The AdvancedMD connector is credential-based: the site shares its AdvancedMD
+    login name, password and Office Key with Inato. Inato's own guidance
+    recommends creating a dedicated AdvancedMD account for Inato. This is the one
+    connector that is not token- or FHIR-scoped, and it sits inside an otherwise
+    strong read-only posture.
+  source: https://support.inato.com/connections/advancedmd

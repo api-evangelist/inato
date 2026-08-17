@@ -1,0 +1,36 @@
+generated: '2026-08-17'
+method: none
+source: >-
+  web search (2026-08-17) for an Inato MCP server, plus live probes of
+  inato.com, www.inato.com, marketplace.inato.com, support.inato.com and DNS
+  lookups for api./developer./docs./app./dev.inato.com
+status: absent
+note: >-
+  RECORDED ABSENCE. Inato ships no MCP server — neither a hosted remote endpoint
+  nor a local stdio package — and there is no OpenAPI, GraphQL schema or other
+  machine-readable contract in this repo from which a candidate tool list could
+  honestly be derived. No `type: MCPServer` pointer is wired in apis.yml. The
+  clinical-trials MCP servers that surface in search (ClinicalTrials.gov
+  wrappers by cyanheads, JackKuo666, augmented-nature and others) are
+  third-party servers over the US government registry and have nothing to do
+  with Inato.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: probed
+tools: []
+tool_count: 0
+searches:
+- query: Inato MCP server / Inato API documentation
+  result: no first-party MCP server; only third-party ClinicalTrials.gov MCP servers
+- registry: npm (@inato, @inato-form scopes)
+  result: 7 first-party packages, none of them an MCP server
+- registry: github.com/inato
+  result: 24 public repos, none an MCP server
+derivation_blocked_because: >-
+  The MCP candidate-derivation path requires OpenAPI operations to bind tools
+  to. Inato publishes no OpenAPI (see ../apis.yml x-coverage: state
+  none/no-developer-program), so deriving a tool list would mean inventing one.
