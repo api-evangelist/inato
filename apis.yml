@@ -43,7 +43,7 @@ accessModel:
     post states the marketplace is free for sites and that revenue comes from
     sponsors — see plans/inato-plans-pricing.yml.
 image: https://cdn.prod.website-files.com/68c165ec9c8a75268ff69a2d/69b3a8be042ee81493120fc1_opengraph.jpg
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-07-17'
 modified: '2026-08-17'
 tags:
